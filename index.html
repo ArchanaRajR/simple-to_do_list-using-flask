@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do-list Flask</title>
+    <style>
+        body{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: whitesmoke;
+            color: rgb(22, 3, 28);
+        }
+        h1,h2{
+            text-align: center;
+        }
+        .input_container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        #input_todo{
+            width: 260px;
+            height: 25px;
+            font-size: 1.25em;
+            text-align: center;
+
+        }
+        #add_todo{
+            height: 40px;
+            width: 40px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgb(12, 179, 51);
+            font-size: 1.5em;
+            cursor: pointer;
+            color: white;
+            
+}
+
+
+            
+        
+        .todo_container{
+           
+            width: 80vw;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .todo{
+           background-color: steelblue;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 0px 10px;
+           border-radius: 10px;
+           font-size: 1.2em;
+
+        }
+        .action>form{
+           display: inline;
+        }
+        .action>form>button{
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            border-radius: 10px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+        .head{
+            filter: drop-shadow(16px 7px 8px #bb6a8e);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="head">To-Do-List Flask</h1>
+    <form action="{{url_for('home')}} " class="input_container" method="post">
+        <input type="text" placeholder="Enter Todo"  name="todo_name" id="input_todo" style="border-radius: 10px; border: none;">
+        <button id="add_todo">+</button>
+    </form>
+    <h2 class="head">Todos</h2>
+    <div class="todo_container">
+        {% for item in items %}
+        <div class="todo">
+            <p>{{item.name}}</p>
+            <div class="action">
+              <form action="{{url_for('checked_todo',todo_id=item.id)}}" method="post">
+                <input type="checkbox" {% if item.checked %}checked{% endif %} onchange="this.form.submit()" style="width: 40px; height: 21px;">
+              </form>
+              <form action="{{url_for('delete_todo',todo_id=item.id)}}" method="post">
+                <button>Delete</button>
+              </form>
+            </div>
+        </div>
+{% endfor %}
+    </div>
+ </div>
+</body>
+</html>
